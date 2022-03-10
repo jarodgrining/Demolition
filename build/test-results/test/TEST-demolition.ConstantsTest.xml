@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demolition.ConstantsTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-11-05T01:44:09" hostname="jarod-VirtualBox" time="0.079">
+  <properties/>
+  <testcase name="graphicsHandler()" classname="demolition.ConstantsTest" time="0.063"/>
+  <testcase name="app()" classname="demolition.ConstantsTest" time="0.003"/>
+  <testcase name="setup()" classname="demolition.ConstantsTest" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

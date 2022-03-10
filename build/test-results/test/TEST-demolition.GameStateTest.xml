@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demolition.GameStateTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2021-11-05T01:44:15" hostname="jarod-VirtualBox" time="5.234">
+  <properties/>
+  <testcase name="testLevelMapInitialisation()" classname="demolition.GameStateTest" time="1.032"/>
+  <testcase name="testEndGameMethods()" classname="demolition.GameStateTest" time="1.041"/>
+  <testcase name="testBombUpdates()" classname="demolition.GameStateTest" time="1.047"/>
+  <testcase name="testCheckExplosionKill()" classname="demolition.GameStateTest" time="1.038"/>
+  <testcase name="testEntityUpdates()" classname="demolition.GameStateTest" time="1.062"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

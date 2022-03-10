@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Bomb.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">Bomb.java</span></div><h1>Bomb.java</h1><pre class="source lang-java linenums">package demolition;
+
+import processing.core.PImage;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+
+public class Bomb extends Entity {
+
+    Map&lt;Direction, PImage&gt; explosionImages;
+
+    public Bomb(List&lt;PImage&gt; frames, Map&lt;Direction, PImage&gt; explosionImages, int x, int y) {
+<span class="fc" id="L13">        super(frames, x, y);</span>
+<span class="fc" id="L14">        this.explosionImages = explosionImages;</span>
+<span class="fc" id="L15">    }</span>
+
+    public void tick() {
+<span class="fc" id="L18">        this.gameTime++;</span>
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        if (this.gameTime % 15 == 0) {</span>
+<span class="nc" id="L20">            this.updateFrame();</span>
+        }
+        // explosion checking handled in App.java
+<span class="fc" id="L23">    }</span>
+
+    public List&lt;Explosion&gt; checkExplode(Tile[][] levelMap) {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (this.gameTime &gt; 120) {</span>
+<span class="fc" id="L27">            List&lt;Explosion&gt; explosions = new ArrayList&lt;Explosion&gt;();</span>
+<span class="fc" id="L28">            explosions.add(new Explosion(this.explosionImages.get(Direction.CENTRE), this.x, this.y));</span>
+
+            int tempX, tempY, offX, offY;
+
+<span class="fc" id="L32">            int xLen = levelMap[0].length;</span>
+<span class="fc" id="L33">            int yLen = levelMap.length;</span>
+
+<span class="fc" id="L35">            Direction tempDir = Direction.UP;</span>
+            do {
+<span class="fc" id="L37">                tempX = this.x;</span>
+<span class="fc" id="L38">                tempY = this.y;</span>
+<span class="fc" id="L39">                offX = tempDir.getXOffset();</span>
+<span class="fc" id="L40">                offY = tempDir.getYOffset();</span>
+
+                // i can assure you, dear marker, that this bizarrely convoluted implementation is better than repeating this code four times
+                // however, if you put a gun to my head and told me to explain how I came up with these inequations and why they work, I'd beg you to pull the trigger
+<span class="pc bpc" id="L44" title="2 of 8 branches missed.">                while ((tempX * offX &lt; this.x + offX * 2) &amp;&amp; (tempX * offX &lt; (xLen + offX * xLen) / 2 - (3 + offX) / 2)</span>
+                    &amp;&amp; (tempY * offY &lt; this.y + offY * 2) &amp;&amp; (tempY * offY &lt; (yLen + offY * yLen) / 2 - (3 + offY) / 2)) {
+<span class="fc" id="L46">                    tempX += offX;</span>
+<span class="fc" id="L47">                    tempY += offY;</span>
+
+<span class="fc bfc" id="L49" title="All 2 branches covered.">                    if (levelMap[tempY][tempX] == Tile.SOLID) {</span>
+<span class="fc" id="L50">                        break;</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">                    } else if (levelMap[tempY][tempX] == Tile.BROKEN) {</span>
+<span class="nc" id="L52">                        levelMap[tempY][tempX] = Tile.EMPTY;</span>
+<span class="nc" id="L53">                        explosions.add(new Explosion(this.explosionImages.get(tempDir), tempX, tempY));</span>
+<span class="nc" id="L54">                        break;</span>
+<span class="fc bfc" id="L55" title="All 4 branches covered.">                    } else if ((tempX == this.x + offX * 2) &amp;&amp; (tempY == this.y + offY * 2)) {</span>
+<span class="fc" id="L56">                        explosions.add(new Explosion(this.explosionImages.get(tempDir), tempX, tempY));</span>
+<span class="fc" id="L57">                        break;</span>
+                    } else {
+<span class="fc" id="L59">                        explosions.add(new Explosion(this.explosionImages.get(tempDir.getAxis()), tempX, tempY));</span>
+                    }
+                }
+
+<span class="fc" id="L63">                tempDir = tempDir.rotateClockwise();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            } while (tempDir != Direction.UP);</span>
+
+<span class="fc" id="L66">            return explosions;</span>
+
+        }
+<span class="fc" id="L69">        return null;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

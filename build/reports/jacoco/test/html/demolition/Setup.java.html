@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Setup.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">Setup.java</span></div><h1>Setup.java</h1><pre class="source lang-java linenums">package demolition;
+
+import processing.core.*;
+import processing.data.*;
+import processing.event.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Scanner;
+import java.util.Stack;
+import java.util.Map;
+import java.util.HashMap;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+public class Setup {
+
+    public List&lt;String&gt; levelFiles;
+    public List&lt;Integer&gt; levelTimes;
+    public PFont font;
+
+    public static final String RESOURCEPATH = &quot;src/main/resources&quot;;
+
+<span class="fc" id="L24">    public Setup() {</span>
+<span class="fc" id="L25">    }</span>
+
+    public Player player(App app) {
+
+<span class="fc" id="L29">        Map&lt;Direction, ArrayList&lt;PImage&gt;&gt; frames = new HashMap&lt;Direction, ArrayList&lt;PImage&gt;&gt;();</span>
+
+<span class="fc" id="L31">        frames.put(Direction.UP, new ArrayList&lt;PImage&gt;());</span>
+<span class="fc" id="L32">        frames.put(Direction.DOWN, new ArrayList&lt;PImage&gt;());</span>
+<span class="fc" id="L33">        frames.put(Direction.LEFT, new ArrayList&lt;PImage&gt;());</span>
+<span class="fc" id="L34">        frames.put(Direction.RIGHT, new ArrayList&lt;PImage&gt;());</span>
+
+<span class="fc" id="L36">        String path = RESOURCEPATH + &quot;/player/player&quot;;</span>
+
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (int i = 1; i &lt; 5; i++) {</span>
+<span class="fc" id="L39">            frames.get(Direction.UP).add(app.loadImage(String.format(&quot;%s_up%d.png&quot;, path, i)));</span>
+<span class="fc" id="L40">            frames.get(Direction.DOWN).add(app.loadImage(String.format(&quot;%s%d.png&quot;, path, i)));</span>
+<span class="fc" id="L41">            frames.get(Direction.LEFT).add(app.loadImage(String.format(&quot;%s_left%d.png&quot;, path, i)));</span>
+<span class="fc" id="L42">            frames.get(Direction.RIGHT).add(app.loadImage(String.format(&quot;%s_right%d.png&quot;, path, i)));</span>
+        }
+
+<span class="fc" id="L45">        return new Player(frames);</span>
+
+    }
+
+    public List&lt;Character&gt; enemies(App app, GraphicsHandler graphicsHandler) {
+
+<span class="fc" id="L51">        graphicsHandler.redFrames = new HashMap&lt;Direction, ArrayList&lt;PImage&gt;&gt;();</span>
+<span class="fc" id="L52">        graphicsHandler.yellowFrames = new HashMap&lt;Direction, ArrayList&lt;PImage&gt;&gt;();</span>
+
+<span class="fc" id="L54">        graphicsHandler.redFrames.put(Direction.UP, new ArrayList&lt;PImage&gt;());</span>
+<span class="fc" id="L55">        graphicsHandler.redFrames.put(Direction.DOWN, new ArrayList&lt;PImage&gt;());</span>
+<span class="fc" id="L56">        graphicsHandler.redFrames.put(Direction.LEFT, new ArrayList&lt;PImage&gt;());</span>
+<span class="fc" id="L57">        graphicsHandler.redFrames.put(Direction.RIGHT, new ArrayList&lt;PImage&gt;());</span>
+
+<span class="fc" id="L59">        graphicsHandler.yellowFrames.put(Direction.UP, new ArrayList&lt;PImage&gt;());</span>
+<span class="fc" id="L60">        graphicsHandler.yellowFrames.put(Direction.DOWN, new ArrayList&lt;PImage&gt;());</span>
+<span class="fc" id="L61">        graphicsHandler.yellowFrames.put(Direction.LEFT, new ArrayList&lt;PImage&gt;());</span>
+<span class="fc" id="L62">        graphicsHandler.yellowFrames.put(Direction.RIGHT, new ArrayList&lt;PImage&gt;());</span>
+
+<span class="fc" id="L64">        String redPath = RESOURCEPATH + &quot;/red_enemy/red_&quot;;</span>
+<span class="fc" id="L65">        String yellowPath = RESOURCEPATH + &quot;/yellow_enemy/yellow_&quot;;</span>
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        for (int i = 1; i &lt; 5; i++) {</span>
+<span class="fc" id="L68">            graphicsHandler.redFrames.get(Direction.UP).add(app.loadImage(String.format(&quot;%sup%d.png&quot;, redPath, i)));</span>
+<span class="fc" id="L69">            graphicsHandler.redFrames.get(Direction.DOWN).add(app.loadImage(String.format(&quot;%sdown%d.png&quot;, redPath, i)));</span>
+<span class="fc" id="L70">            graphicsHandler.redFrames.get(Direction.LEFT).add(app.loadImage(String.format(&quot;%sleft%d.png&quot;, redPath, i)));</span>
+<span class="fc" id="L71">            graphicsHandler.redFrames.get(Direction.RIGHT).add(app.loadImage(String.format(&quot;%sright%d.png&quot;, redPath, i)));</span>
+<span class="fc" id="L72">            graphicsHandler.yellowFrames.get(Direction.UP).add(app.loadImage(String.format(&quot;%sup%d.png&quot;, yellowPath, i)));</span>
+<span class="fc" id="L73">            graphicsHandler.yellowFrames.get(Direction.DOWN).add(app.loadImage(String.format(&quot;%sdown%d.png&quot;, yellowPath, i)));</span>
+<span class="fc" id="L74">            graphicsHandler.yellowFrames.get(Direction.LEFT).add(app.loadImage(String.format(&quot;%sleft%d.png&quot;, yellowPath, i)));</span>
+<span class="fc" id="L75">            graphicsHandler.yellowFrames.get(Direction.RIGHT).add(app.loadImage(String.format(&quot;%sright%d.png&quot;, yellowPath, i)));</span>
+        }
+
+<span class="fc" id="L78">        return new ArrayList&lt;Character&gt;();</span>
+
+    }
+
+    public List&lt;Bomb&gt; bombs(App app, GraphicsHandler graphicsHandler) {
+<span class="fc" id="L83">        graphicsHandler.bombFrames = new ArrayList&lt;PImage&gt;();</span>
+<span class="fc" id="L84">        graphicsHandler.bombFrames.add(app.loadImage(RESOURCEPATH + &quot;/bomb/bomb.png&quot;));</span>
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (int i = 1; i &lt; 9; i++) {</span>
+<span class="fc" id="L87">            graphicsHandler.bombFrames.add(app.loadImage(String.format(&quot;%s/bomb/bomb%d.png&quot;, RESOURCEPATH, i)));</span>
+        }
+<span class="fc" id="L89">        return new LinkedList&lt;Bomb&gt;();</span>
+    }
+
+    public List&lt;Explosion&gt; explosions(App app, GraphicsHandler graphicsHandler) {
+<span class="fc" id="L93">        String exPath = RESOURCEPATH + &quot;/explosion/&quot;;</span>
+
+<span class="fc" id="L95">        graphicsHandler.explosionFrames = new HashMap&lt;Direction, PImage&gt;();</span>
+<span class="fc" id="L96">        graphicsHandler.explosionFrames.put(Direction.CENTRE, app.loadImage(exPath + &quot;centre.png&quot;));</span>
+<span class="fc" id="L97">        graphicsHandler.explosionFrames.put(Direction.VERTICAL, app.loadImage(exPath + &quot;vertical.png&quot;));</span>
+<span class="fc" id="L98">        graphicsHandler.explosionFrames.put(Direction.HORIZONTAL, app.loadImage(exPath + &quot;horizontal.png&quot;));</span>
+<span class="fc" id="L99">        graphicsHandler.explosionFrames.put(Direction.UP, app.loadImage(exPath + &quot;end_top.png&quot;));</span>
+<span class="fc" id="L100">        graphicsHandler.explosionFrames.put(Direction.DOWN, app.loadImage(exPath + &quot;end_bottom.png&quot;));</span>
+<span class="fc" id="L101">        graphicsHandler.explosionFrames.put(Direction.LEFT, app.loadImage(exPath + &quot;end_left.png&quot;));</span>
+<span class="fc" id="L102">        graphicsHandler.explosionFrames.put(Direction.RIGHT, app.loadImage(exPath + &quot;end_right.png&quot;));</span>
+
+<span class="fc" id="L104">        return new LinkedList&lt;Explosion&gt;();</span>
+    }
+
+    public boolean parseJSON(Player player, String filePathExtension) {
+        try {
+
+<span class="fc" id="L110">            File f = new File(filePathExtension + &quot;config.json&quot;);</span>
+<span class="fc" id="L111">            Scanner scan = new Scanner(f);</span>
+<span class="fc" id="L112">            String plainText = &quot;&quot;;</span>
+
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            while (scan.hasNextLine()) {</span>
+<span class="fc" id="L115">                plainText += scan.nextLine() + &quot;\n&quot;;</span>
+            }
+
+<span class="fc" id="L118">            JSONObject data = JSONObject.parse(plainText);</span>
+<span class="fc" id="L119">            levelFiles = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L120">            levelTimes = new ArrayList&lt;Integer&gt;();</span>
+
+<span class="fc" id="L122">            JSONArray levelsArray = data.getJSONArray(&quot;levels&quot;);</span>
+            JSONObject level;
+
+<span class="fc bfc" id="L125" title="All 2 branches covered.">            for (int i = 0; i &lt; levelsArray.size(); i++) {</span>
+<span class="fc" id="L126">                level = levelsArray.getJSONObject(i);</span>
+<span class="fc" id="L127">                levelFiles.add(level.getString(&quot;path&quot;));</span>
+<span class="fc" id="L128">                levelTimes.add((Integer) level.getInt(&quot;time&quot;));</span>
+            }
+
+<span class="fc" id="L131">            player.lives = data.getInt(&quot;lives&quot;);</span>
+
+<span class="fc" id="L133">            return true;</span>
+
+<span class="fc" id="L135">        } catch (FileNotFoundException e) {</span>
+<span class="fc" id="L136">            return false;</span>
+        }
+    }
+
+    public PFont loadImages(App app, GraphicsHandler graphicsHandler) {
+<span class="fc" id="L141">        graphicsHandler.tileImages = new HashMap&lt;Tile, PImage&gt;();</span>
+<span class="fc" id="L142">        graphicsHandler.tileImages.put(Tile.SOLID, app.loadImage(RESOURCEPATH + &quot;/wall/solid.png&quot;));</span>
+<span class="fc" id="L143">        graphicsHandler.tileImages.put(Tile.BROKEN, app.loadImage(RESOURCEPATH + &quot;/broken/broken.png&quot;));</span>
+<span class="fc" id="L144">        graphicsHandler.tileImages.put(Tile.GOAL, app.loadImage(RESOURCEPATH + &quot;/goal/goal.png&quot;));</span>
+<span class="fc" id="L145">        graphicsHandler.tileImages.put(Tile.EMPTY, app.loadImage(RESOURCEPATH + &quot;/empty/empty.png&quot;));</span>
+
+<span class="fc" id="L147">        graphicsHandler.livesIcon = app.loadImage(RESOURCEPATH + &quot;/icons/player.png&quot;);</span>
+<span class="fc" id="L148">        graphicsHandler.timeIcon = app.loadImage(RESOURCEPATH + &quot;/icons/clock.png&quot;);</span>
+
+<span class="fc" id="L150">        font = app.createFont(RESOURCEPATH + &quot;/PressStart2P-Regular.ttf&quot;, App.FONTSIZE);</span>
+<span class="fc" id="L151">        return font;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

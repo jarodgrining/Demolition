@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demolition.KeyHandlerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-11-05T01:44:21" hostname="jarod-VirtualBox" time="0.0">
+  <properties/>
+  <testcase name="testKeyRelease()" classname="demolition.KeyHandlerTest" time="0.0"/>
+  <testcase name="testKeyPress()" classname="demolition.KeyHandlerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
